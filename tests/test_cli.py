@@ -6,7 +6,7 @@ from unittest.mock import MagicMock
 from io import StringIO
 import sys as _sys
 from presentation.cli import CLI
-from models.entities import MenuItem, Book, UserBase
+from modelos.entidades import MenuItem, Book, UserBase
 
 class TestCLI(unittest.TestCase):
     def test_show_menu_returns_mapping_and_prints(self):

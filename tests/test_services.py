@@ -4,7 +4,7 @@ sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), "..",
 import unittest
 from unittest.mock import MagicMock
 from business.services import BookService, UserService, MenuService
-from models.entities import Book, UserBase
+from modelos.entidades import Book, UserBase
 
 class TestServices(unittest.TestCase):
     def test_bookservice_add_and_list_calls_repo(self):

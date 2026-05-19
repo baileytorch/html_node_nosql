@@ -3,8 +3,8 @@ sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), "..",
 
 import unittest
 from unittest.mock import MagicMock, patch
-from data.repository import MongoRepository
-from models.entities import MenuItem, Book
+from data.repositorio import MongoRepository
+from modelos.entidades import MenuItem, Book
 
 class TestMongoRepository(unittest.TestCase):
     @patch("data.repository.MongoClient")

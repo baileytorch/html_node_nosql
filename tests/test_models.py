@@ -1,5 +1,5 @@
 import unittest
-from src.models import User  # Assuming User is a class defined in models
+from src.modelos import User  # Assuming User is a class defined in models
 
 class TestUserModel(unittest.TestCase):
 

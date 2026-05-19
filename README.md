@@ -1,6 +1,6 @@
-# Python OOP Project
+# Proyecto POO con Python + MongoDB
 
-This project is a demonstration of object-oriented programming principles in Python. It is structured to separate concerns into models, services, and utilities, making the codebase modular and maintainable.
+este proyecto es una demostración de los principios de la POO en Python. Estructurado en capas (data, modelos, negocio), para separar las responsabilidades del código, hacerlo más modular y facilitar la mantención.
 
 ## Project Structure
 

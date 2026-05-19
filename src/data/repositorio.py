@@ -1,5 +1,5 @@
 from pymongo import MongoClient
-from models.entities import Book, UserBase, MenuItem
+from modelos.entidades import Book, UserBase, MenuItem
 
 class MongoRepository:
     def __init__(self, uri="mongodb://localhost:27017", db_name="university_library"):

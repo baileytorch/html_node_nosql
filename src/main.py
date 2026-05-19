@@ -25,7 +25,7 @@ if __name__ == "__main__":
 
 # Nuevo entrypoint que arranca la CLI y el DB seed
 
-from data.repository import MongoRepository
+from data.repositorio import MongoRepository
 from business.services import BookService, UserService, MenuService
 from presentation.cli import CLI
 

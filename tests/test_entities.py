@@ -2,7 +2,7 @@ import sys, os
 sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), "..", "src")))
 
 import unittest
-from models.entities import Book, UserBase, MenuItem
+from modelos.entidades import Book, UserBase, MenuItem
 
 class TestEntities(unittest.TestCase):
     def test_book_to_from_dict_and_str(self):

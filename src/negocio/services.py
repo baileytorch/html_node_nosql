@@ -1,5 +1,5 @@
-from data.repository import MongoRepository
-from models.entities import Book, UserBase
+from data.repositorio import MongoRepository
+from modelos.entidades import Book, UserBase
 
 class BookService:
     def __init__(self, repo: MongoRepository):
