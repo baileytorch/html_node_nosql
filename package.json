@@ -1,0 +1,26 @@
+{
+  "name": "python-oop-project",
+  "version": "1.0.0",
+  "description": "No puedes conectar un formulario web (HTML/JS) directamente a MongoDB por seguridad. Necesitas un backend (como Node.js con Express) que reciba los datos de tu formulario y los guarde en la base de datos local.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/baileytorch/python-oop-project.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/baileytorch/python-oop-project/issues"
+  },
+  "homepage": "https://github.com/baileytorch/python-oop-project#readme",
+  "dependencies": {
+    "body-parser": "^2.2.2",
+    "cors": "^2.8.6",
+    "express": "^5.2.1",
+    "mongoose": "^9.6.2"
+  }
+}
