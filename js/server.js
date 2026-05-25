@@ -25,6 +25,7 @@ mongoose.connect("mongodb://localhost:27017/test", {
 const usuario = new mongoose.Schema({
     nombre: String,
     email: String,
+    contrasena: String,
 });
 
 const Usuario = mongoose.model("Usuario", usuario);
@@ -34,9 +35,9 @@ const Usuario = mongoose.model("Usuario", usuario);
 app.post("/guardar", async (req, res) => {
     console.log("Datos recibidos:", req.body);
     try {
-        const { nombre, email } = req.body;
+        const { nombre, email, contrasena } = req.body;
         const nuevoUsuario = new Usuario({ nombre, email, contrasena });
-        // const nuevoUsuario = new Usuario(req.body);
+
         await nuevoUsuario.save();
         res.status(200).json({ message: "Datos guardados correctamente" });
     } catch (error) {

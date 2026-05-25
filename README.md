@@ -33,7 +33,7 @@ Se puede utilizar la herramienta oficial MongoDB Compass para revisar las bases 
 
 ## Uso
 
-Para iniciar la aplicación, ejecute el siguiente comando:
+Una vez codificado el backend, iniciar la aplicación, ejecutando el siguiente comando:
 ```
 node app.js
 ```
