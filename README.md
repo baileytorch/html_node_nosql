@@ -1,49 +1,39 @@
-# Proyecto POO con Python + MongoDB
+# Proyecto HTML + MongoDB
 
-este proyecto es una demostración de los principios de la POO en Python. Estructurado en capas (data, modelos, negocio), para separar las responsabilidades del código, hacerlo más modular y facilitar la mantención.
+No puedes conectar un formulario web (HTML/JS) directamente a MongoDB por seguridad. Necesitas un backend (como Node.js con Express) que reciba los datos de tu formulario y los guarde en la base de datos local.
 
-## Project Structure
+## Preparar MongoDB local
 
 ```
-python-oop-project
-├── src
-│   ├── main.py          # Entry point of the application
-│   ├── models           # Contains data model classes
-│   ├── services         # Contains business logic services
-│   └── utils            # Contains utility functions and classes
-├── tests                # Contains unit tests for the application
-├── requirements.txt     # Lists project dependencies
-├── README.md            # Project documentation
-└── .gitignore           # Files to ignore in version control
+La instancia de MongoDB debe estar corriendo.
+Por defecto, el servidor local utiliza la siguiente cadena de conexión: mongodb://localhost:27017
+Se puede utilizar la herramienta oficial MongoDB Compass para revisar las bases de datos y colecciones.
 ```
 
-## Setup Instructions
+## Crear el Backend (Node.js y Express)
 
-1. Clone the repository:
+1. Clonar el repositorio:
    ```
-   git clone <repository-url>
-   cd python-oop-project
+   git clone <url-repositorio>
+   cd repositorio
    ```
 
-2. Install the required dependencies:
+2. Instalar dependencias necesarias:
+   Descargar e instalar Node.js.
+   Una vez instalado, ejecutar por terminal:
    ```
-   pip install -r requirements.txt
+   npm init -y
+   npm install express mongoose cors body-parser
    ```
 
-## Usage
+   Si no permite ejecución de Scripts, ejecutar por terminal:
+   ```
+   Set-ExecutionPolicy RemoteSigned -Scope CurrentUser
+   ```
 
-To run the application, execute the following command:
+## Uso
+
+Para iniciar la aplicación, ejecute el siguiente comando:
 ```
-python src/main.py
+node app.js
 ```
-
-## Testing
-
-To run the tests, use the following command:
-```
-pytest tests/
-```
-
-## Contributing
-
-Feel free to submit issues or pull requests for improvements or bug fixes.
