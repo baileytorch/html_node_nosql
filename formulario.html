@@ -8,7 +8,7 @@
     <link rel="shortcut icon" href="./assets/images/test.ico" type="image/x-icon">
 
     <link href="./css/darkly.css" rel="stylesheet">
-        <link href="./css/form.css" rel="stylesheet">
+    <link href="./css/form.css" rel="stylesheet">
         
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI"
@@ -40,25 +40,59 @@
     </nav>
     <br>
 
-    <div class="container card">
+    <div class="container">
         <p class="h3">Formulario de Registro</p>
         <br>
         
         <form id="formulario" method="POST">
             <div class="row">
                 <div class="col">
-                    <label for="nombre" class="form-label">Nombre:</label>
-                    <input type="text" class="form-control" id="nombre" name="nombre">
+                    <label for="inputNombre" class="form-label">Nombre:</label>
+                    <input type="text" class="form-control" id="inputNombre" name="inputNombre">
                     <div class="invalid-feedback">
                         El campo NOMBRE es obligatorio.
                     </div>
                 </div>
                 <div class="col">
-                    <label for="email" class="form-label">Email:</label>
-                    <input type="email" class="form-control" id="email" name="email">
+                    <label for="inputEmail" class="form-label">Email:</label>
+                    <input type="email" class="form-control" id="inputEmail" name="inputEmail">
                     <div class="invalid-feedback">
                         El campo EMAIL es obligatorio.
                     </div>
+                </div>
+            </div>
+            <br>
+
+            <div class="row">
+                <div class="col">
+                    <label for="inputFechaNacimiento" class="form-label">Fecha de Nacimiento:</label>
+                    <input type="date" class="form-control" id="inputFechaNacimiento" name="inputFechaNacimiento">
+                </div>
+                <div class="col">
+                    <label for="inputEmail" class="form-label">Email:</label>
+                    <input type="email" class="form-control" id="inputEmail" name="inputEmail">
+                    <div class="invalid-feedback">
+                        El campo EMAIL es obligatorio.
+                    </div>
+                </div>
+            </div>
+            <br>
+
+            <div class="row">
+                <div class="col">
+                    <label for="selectGenero" class="form-label">Género:</label>
+                    <select class="form-select" aria-label="Default select example" id="selectGenero" name="selectGenero">
+                        <option selected>Seleccione su género</option>
+                        <option value="Masc">Masculino</option>
+                        <option value="Fem">Femenino</option>
+                        <option value="Otro">Otro</option>
+                    </select>
+                </div>
+                <div class="col">
+                    <label for="selectNacionalidad" class="form-label">Nacionalidad:</label>
+                    <select class="form-select" aria-label="Default select example" id="selectNacionalidad" name="selectNacionalidad">
+                        <option value="" selected>Seleccione su nacionalidad</option>
+                    </select>
                 </div>
             </div>
             <br>
