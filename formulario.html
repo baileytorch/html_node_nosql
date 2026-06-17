@@ -7,19 +7,22 @@
     <title>Formulario Test</title>
     <link rel="shortcut icon" href="./assets/images/test.ico" type="image/x-icon">
 
-    <link href="./css/darkly.css" rel="stylesheet">
+    <link href="./css/brite.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.13.1/font/bootstrap-icons.min.css">
     <link href="./css/form.css" rel="stylesheet">
-        
+
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI"
         crossorigin="anonymous"></script>
+    <script src="https://code.jquery.com/jquery-4.0.0.min.js"
+        integrity="sha256-OaVG6prZf4v69dPg6PhVattBXkcOWQB62pdZ3ORyrao=" crossorigin="anonymous"></script>
     <script src="./js/form.js"></script>
 </head>
 
 <body>
-    <nav class="navbar navbar-expand-lg bg-dark" data-bs-theme="dark">
+    <nav class="navbar navbar-expand-lg bg-primary" data-bs-theme="light">
         <div class="container-fluid">
-            <a class="navbar-brand" href="#">App Test</a>
+            <a class="navbar-brand" href="#"><i class="bi bi-activity"></i> App Test</a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarColor02"
                 aria-controls="navbarColor02" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
@@ -43,22 +46,21 @@
     <div class="container">
         <p class="h3">Formulario de Registro</p>
         <br>
-        
-        <form id="formulario" method="POST">
+
+        <form id="formularioRegistro">
             <div class="row">
                 <div class="col">
                     <label for="inputNombre" class="form-label">Nombre:</label>
-                    <input type="text" class="form-control" id="inputNombre" name="inputNombre">
-                    <div class="invalid-feedback">
-                        El campo NOMBRE es obligatorio.
-                    </div>
+                    <input type="text" class="form-control" id="inputNombre" name="nombre"
+                        onchange="validarInput($(this), $('#alertNombre'), 'El nombre es obligatorio.');">
+                    <div class="alert alert-danger" role="alert" id="alertNombre"></div>
                 </div>
+
                 <div class="col">
                     <label for="inputEmail" class="form-label">Email:</label>
-                    <input type="email" class="form-control" id="inputEmail" name="inputEmail">
-                    <div class="invalid-feedback">
-                        El campo EMAIL es obligatorio.
-                    </div>
+                    <input type="email" class="form-control" id="inputEmail" name="email"
+                        onchange="validarEmail($(this), $('#alertEmail'), 'El email es obligatorio.');">
+                    <div class="alert alert-danger" role="alert" id="alertEmail"></div>
                 </div>
             </div>
             <br>
@@ -66,51 +68,59 @@
             <div class="row">
                 <div class="col">
                     <label for="inputFechaNacimiento" class="form-label">Fecha de Nacimiento:</label>
-                    <input type="date" class="form-control" id="inputFechaNacimiento" name="inputFechaNacimiento">
+                    <input type="date" class="form-control" id="inputFechaNacimiento" name="fechaNacimiento">
                 </div>
+
                 <div class="col">
-                    <label for="inputEmail" class="form-label">Email:</label>
-                    <input type="email" class="form-control" id="inputEmail" name="inputEmail">
-                    <div class="invalid-feedback">
-                        El campo EMAIL es obligatorio.
-                    </div>
+                    <label for="selectNacionalidad" class="form-label">Nacionalidad:</label>
+                    <select class="form-select" id="selectNacionalidad" name="nacionalidad">
+                        <option selected>Seleccione su nacionalidad</option>
+                    </select>
                 </div>
             </div>
             <br>
 
             <div class="row">
                 <div class="col">
+                    <label for="inputDireccion" class="form-label">Dirección:</label>
+                    <input type="text" class="form-control" id="inputDireccion" name="direccion">
+                </div>
+
+                <div class="col">
                     <label for="selectGenero" class="form-label">Género:</label>
-                    <select class="form-select" aria-label="Default select example" id="selectGenero" name="selectGenero">
+                    <select class="form-select" aria-label="Default select example" id="selectGenero" name="genero">
                         <option selected>Seleccione su género</option>
                         <option value="Masc">Masculino</option>
                         <option value="Fem">Femenino</option>
                         <option value="Otro">Otro</option>
                     </select>
                 </div>
+            </div>
+            <br>
+
+            <div class="row">
                 <div class="col">
-                    <label for="selectNacionalidad" class="form-label">Nacionalidad:</label>
-                    <select class="form-select" aria-label="Default select example" id="selectNacionalidad" name="selectNacionalidad">
-                        <option value="" selected>Seleccione su nacionalidad</option>
-                    </select>
+                    <label for="inputContrasena" class="form-label">Contraseña:</label>
+                    <input type="password" class="form-control" id="inputContrasena" name="contrasena"
+                        onchange="validarContrasena($(this), $('#alertContrasena'), 'La contraseña es obligatoria.');">
+                    <div class="alert alert-danger" role="alert" id="alertContrasena"></div>
+                </div>
+
+                <div class="col">
+                    <label for="inputRepetirContrasena" class="form-label">Repetir Contraseña:</label>
+                    <input type="password" class="form-control" id="inputRepetirContrasena" name="repetirContrasena"
+                        onchange="validarRepetirContrasena($('#inputContrasena'), $(this), $('#alertRepetirContrasena'), 'Debe repetir la contraseña.');">
+                    <div class="alert alert-danger" role="alert" id="alertRepetirContrasena"></div>
                 </div>
             </div>
             <br>
 
             <div class="row">
                 <div class="col">
-                    <label for="contrasena" class="form-label">Contraseña:</label>
-                    <input type="password" class="form-control" id="contrasena" name="contrasena">
-                    <div class="invalid-feedback">
-                        El campo CONTRASEÑA es obligatorio.
-                    </div>
-                </div>
-                <div class="col">
-                    <label for="repetirContrasena" class="form-label">Repetir Contraseña:</label>
-                    <input type="password" class="form-control" id="repetirContrasena" name="repetirContrasena">
-                    <div class="invalid-feedback">
-                        El campo REPETIR CONTRASEÑA es obligatorio.
-                    </div>
+                    <label for="inputFoto" class="form-label">Foto:</label>
+                    <input type="file" class="form-control" id="inputFoto" name="foto"
+                        onchange="validarInput($(this), $('#alertFoto'), 'La foto es obligatoria.');">
+                    <div class="alert alert-danger" role="alert" id="alertFoto"></div>
                 </div>
             </div>
             <br>
@@ -118,11 +128,28 @@
             <div class="row">
                 <div class="col"></div>
                 <div class="col d-flex justify-content-end">
-                    <button type="reset" class="btn btn-secondary me-2" id="btnCancelar">Cancelar</button>
-                    <button type="submit" class="btn btn-primary">Guardar</button>
+                    <button type="button" class="btn btn-secondary me-2" onclick="limpiarFormulario();">Cancelar</button>
+                    <button type="button" class="btn btn-primary" onclick="enviarFormulario();">Guardar</button>
                 </div>
             </div>
         </form>
+    </div>
+
+    <div class="modal" tabindex="-1" id="modalErrores">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Problemas al enviar el formulario</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <p>Se han detectado errores en el formulario. Por favor, corrige los campos marcados en rojo.</p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Corregir errores</button>
+                </div>
+            </div>
+        </div>
     </div>
 </body>
 

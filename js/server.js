@@ -25,7 +25,12 @@ mongoose.connect("mongodb://localhost:27017/test", {
 const usuario = new mongoose.Schema({
     nombre: String,
     email: String,
+    fechaNacimiento: Date,
+    nacionalidad: String,
+    direccion: String,
+    genero: String,
     contrasena: String,
+    foto: String
 });
 
 const Usuario = mongoose.model("Usuario", usuario, 'usuarios');
@@ -43,8 +48,8 @@ const Pais = mongoose.model("Pais", pais, 'paises');
 app.post("/guardar", async (req, res) => {
     console.log("Datos recibidos:", req.body);
     try {
-        const { nombre, email, contrasena } = req.body;
-        const nuevoUsuario = new Usuario({ nombre, email, contrasena });
+        const { nombre, email, fechaNacimiento, nacionalidad, direccion, genero, contrasena, foto } = req.body;
+        const nuevoUsuario = new Usuario({ nombre, email, fechaNacimiento, nacionalidad, direccion, genero, contrasena, foto });
 
         await nuevoUsuario.save();
         res.status(200).json({ message: "Datos guardados correctamente" });

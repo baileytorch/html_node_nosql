@@ -1,68 +1,162 @@
 window.onload = function () {
-    cargarOpciones(); // Llama a la función para cargar las opciones del select al cargar la página
+    cargarOpciones();
+    $('#alertNombre').hide();
+    $('#alertEmail').hide();
+    $('#alertContrasena').hide();
+    $('#alertRepetirContrasena').hide();
+    $('#alertFoto').hide();
+};
 
-    document.querySelector("form").addEventListener("submit", async (e) => {
-        e.preventDefault();
+function validarFormulario() {
+    const nombre = $("#inputNombre");
+    const email = $("#inputEmail");
+    const fechaNacimiento = $("#inputFechaNacimiento");
+    const nacionalidad = $("#selectNacionalidad");
+    const direccion = $("#inputDireccion");
+    const genero = $('#selectGenero');
+    const contrasena = $("#inputContrasena");
+    const repetirContrasena = $("#inputRepetirContrasena");
+    const foto = $("#inputFoto");
+    let formularioValido = true;
 
-        if (validarFormulario()) {
-            const formData = new FormData(e.target);
-            const datos = Object.fromEntries(formData.entries());
+    if (!validarInput(nombre, $('#alertNombre'), "El campo NOMBRE es obligatorio.")) {
+        formularioValido = false;
+    }
+    if (!validarEmail(email, $('#alertEmail'), "El campo EMAIL es obligatorio.")) {
+        formularioValido = false;
+    }
+    if (!validarContrasena(contrasena, $('#alertContrasena'), "El campo CONTRASEÑA es obligatorio.")) {
+        formularioValido = false;
+    }
+    if (!validarInput(repetirContrasena, $('#alertRepetirContrasena'), "El campo REPETIR CONTRASEÑA es obligatorio.")) {
+        formularioValido = false;
+    }
+    if (!validarInput(foto, $('#alertFoto'), "Debe seleccionar una imagen para cargar.")) {
+        formularioValido = false;
+    }
 
-            const response = await fetch("http://localhost:3000/guardar", {
-                method: "POST",
-                headers: {
-                    "Content-Type": "application/json",
-                },
-                body: JSON.stringify(datos),
-            })
-                .then((res) => res.text())
-                .then((data) => console.log(data))
-                .catch((err) => console.error("Error:", err));
-        };
-    });
+    return formularioValido;
+};
+
+function validarInput(input, alert, mensaje) {
+    const valor = input.val()?.trim() ?? '';
+    if (valor === '') {
+        input.addClass("is-invalid");
+        alert.text(mensaje);
+        alert.show();
+        return false;
+    } else {
+        input.removeClass("is-invalid");
+        input.addClass("is-valid");
+        alert.hide();
+        return true;
+    }
+};
+
+function validarEmail(input, alert, mensaje) {
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (validarInput(input, alert, mensaje)) {
+        if (!emailRegex.test(input.val())) {
+            input.addClass("is-invalid");
+            input.removeClass("is-valid");
+            alert.text('El formato del EMAIL es incorrecto.');
+            alert.show();
+            return false;
+        } else {
+            input.removeClass("is-invalid");
+            input.addClass("is-valid");
+            alert.hide();
+            return true;
+        }
+    }
+    return false;
+};
+
+function validarContrasena(contrasena, alert, mensaje) {
+    const contrasenaRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/;
+    if (validarInput(contrasena, alert, mensaje)) {
+        if (!contrasenaRegex.test(contrasena.val())) {
+            contrasena.addClass("is-invalid");
+            contrasena.removeClass("is-valid");
+            alert.text('La contraseña debe tener al menos 8 caracteres, incluyendo una mayúscula, una minúscula, un número y un carácter especial.');
+            alert.show();
+            return false;
+        } else {
+            contrasena.removeClass("is-invalid");
+            contrasena.addClass("is-valid");
+            alert.hide();
+            return true;
+        }
+    }
+    return false;
+};
+
+function validarRepetirContrasena(contrasena, repetirContrasena, alert, mensaje) {
+    if (validarInput(repetirContrasena, alert, mensaje)) {
+        if (contrasena.val() !== repetirContrasena.val()) {
+            repetirContrasena.addClass("is-invalid");
+            repetirContrasena.removeClass("is-valid");
+            alert.text('Las contraseñas no coinciden.');
+            alert.show();
+            return false;
+        } else {
+            repetirContrasena.removeClass("is-invalid");
+            repetirContrasena.addClass("is-valid");
+            alert.hide();
+            return true;
+        }
+    }
+    return false;
 };
 
 async function enviarFormulario() {
     if (validarFormulario()) {
-            const formData = new FormData(e.target);
-            const datos = Object.fromEntries(formData.entries());
+        const formulario = $('#formularioRegistro')[0];
+        const formData = new FormData(formulario);
 
-            const response = await fetch("http://localhost:3000/guardar", {
+        const contrasena = formData.get('contrasena');
+        const hashContrasena = await hashPassword(contrasena);
+        formData.set('contrasena', hashContrasena);
+
+        const archivoFoto = formData.get('foto');
+        const nombreArchivo = archivoFoto.name;
+        formData.set('foto', nombreArchivo);
+
+        const datos = Object.fromEntries(formData.entries());
+
+        try {
+            const respuesta = await fetch("http://localhost:3000/guardar", {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json",
                 },
                 body: JSON.stringify(datos),
-            })
-                .then((res) => res.text())
-                .then((data) => console.log(data))
-                .catch((err) => console.error("Error:", err));
-        };
-}
+            });
+            const data = await respuesta.text();
+            console.log(data);
+            if (respuesta.ok) {
+                window.location.href = './index.html';
+            }
 
-function validarFormulario() {
-    const nombre = document.getElementById("nombre");
-    const email = document.getElementById("email");
-    const contrasena = document.getElementById("contrasena");
-    const repetirContrasena = document.getElementById("repetirContrasena");
-
-    if (nombre.value == '' || email.value == '' || contrasena.value == '' || repetirContrasena.value == '') {
-        nombre.classList.add("is-invalid");
-        email.classList.add("is-invalid");
-        contrasena.classList.add("is-invalid");
-        repetirContrasena.classList.add("is-invalid");
-        alert("Por favor, complete todos los campos.");
-        return false;
+        } catch (err) {
+            console.error("Error:", err);
+        }
+    } else {
+        $('#modalErrores').modal('show');
     }
-    return true;
+};
+
+function limpiarFormulario() {
+    $('#formularioRegistro')[0].reset();
+    $('.is-invalid').removeClass('is-invalid');
+    $('.is-valid').removeClass('is-valid');
+    $('.alert').alert('close');
 }
 
 async function cargarOpciones() {
     try {
         const respuesta = await fetch('http://localhost:3000/paises');
         const datos = await respuesta.json();
-
-        console.log(datos);
 
         const select = document.getElementById('selectNacionalidad');
 
@@ -75,4 +169,13 @@ async function cargarOpciones() {
     } catch (error) {
         console.error('Error cargando opciones:', error);
     }
+};
+
+async function hashPassword(password) {
+    const encoder = new TextEncoder();
+    const data = encoder.encode(password);
+    const hashBuffer = await window.crypto.subtle.digest('SHA-256', data);
+    const hashArray = Array.from(new Uint8Array(hashBuffer));
+    const hashHex = hashArray.map(b => b.toString(16).padStart(2, '0')).join('');
+    return hashHex;
 }
