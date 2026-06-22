@@ -26,6 +26,20 @@ const address = new mongoose.Schema({
     departamento: String
 });
 
+const comuna = new mongoose.Schema({
+    C_REGION: Number,
+    COMUNA_INE: Number,
+    N_COMUNA: String,
+});
+const Comuna = mongoose.model("Comuna", comuna, 'comunas');
+
+const pais = new mongoose.Schema({
+    nombre: String,
+    iso_2: String,
+    nacionalidad: String,
+});
+const Pais = mongoose.model("Pais", pais, 'paises');
+
 // Esquemas y modelos de Mongoose
 const usuario = new mongoose.Schema({
     nombre: String,
@@ -39,13 +53,6 @@ const usuario = new mongoose.Schema({
     fecha: { type: Date, default: Date.now }
 });
 const Usuario = mongoose.model("Usuario", usuario, 'usuarios');
-
-const pais = new mongoose.Schema({
-    nombre: String,
-    iso_2: String,
-    nacionalidad: String,
-});
-const Pais = mongoose.model("Pais", pais, 'paises');
 
 // Rutas
 // Ruta para recibir datos de un formulario
@@ -92,6 +99,16 @@ app.get('/paises', async (req, res) => {
     try {
         const paises = await Pais.find();
         res.json(paises);
+    } catch (error) {
+        res.status(500).json({ mensaje: 'Error al obtener datos' });
+    }
+});
+
+// Ruta para leer datos comunas
+app.get('/comunas', async (req, res) => {
+    try {
+        const comunas = await Comuna.find();
+        res.json(comunas);
     } catch (error) {
         res.status(500).json({ mensaje: 'Error al obtener datos' });
     }

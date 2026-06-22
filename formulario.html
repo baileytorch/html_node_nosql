@@ -45,9 +45,12 @@
 
     <div class="container">
         <p class="h3">Formulario de Registro</p>
-        <br>
+        <hr>
 
         <form id="formularioRegistro">
+            <p class="h4">Datos Personales</p>
+            <br>
+
             <div class="row">
                 <div class="col">
                     <label for="inputNombre" class="form-label">Nombre:</label>
@@ -61,6 +64,13 @@
                     <input type="email" class="form-control" id="inputEmail" name="email"
                         onchange="validarEmail($(this), $('#alertEmail'), 'El email es obligatorio.');">
                     <div class="alert alert-danger" role="alert" id="alertEmail"></div>
+                </div>
+
+                <div class="col">
+                    <label for="inputFoto" class="form-label">Foto:</label>
+                    <input type="file" class="form-control" id="inputFoto" name="foto"
+                        onchange="validarInput($(this), $('#alertFoto'), 'La foto es obligatoria.');">
+                    <div class="alert alert-danger" role="alert" id="alertFoto"></div>
                 </div>
             </div>
             <br>
@@ -76,14 +86,6 @@
                     <select class="form-select" id="selectNacionalidad" name="nacionalidad">
                         <option selected>Seleccione su nacionalidad</option>
                     </select>
-                </div>
-            </div>
-            <br>
-
-            <div class="row">
-                <div class="col">
-                    <label for="inputDireccion" class="form-label">Dirección:</label>
-                    <input type="text" class="form-control" id="inputDireccion" name="direccion">
                 </div>
 
                 <div class="col">
@@ -114,13 +116,22 @@
                 </div>
             </div>
             <br>
+            <hr>
+
+            <p class="h4">Dirección</p>
+            <br>
 
             <div class="row">
                 <div class="col">
-                    <label for="inputFoto" class="form-label">Foto:</label>
-                    <input type="file" class="form-control" id="inputFoto" name="foto"
-                        onchange="validarInput($(this), $('#alertFoto'), 'La foto es obligatoria.');">
-                    <div class="alert alert-danger" role="alert" id="alertFoto"></div>
+                    <label for="selectComuna" class="form-label">Comuna:</label>
+                    <select class="form-select" aria-label="Default select example" id="selectComuna" name="comuna">
+                        <option selected>Seleccione su comuna</option>
+                    </select>
+                </div>
+
+                <div class="col">
+                    <label for="inputDireccion" class="form-label">Dirección:</label>
+                    <input type="text" class="form-control" id="inputDireccion" name="direccion">
                 </div>
             </div>
             <br>
@@ -128,7 +139,8 @@
             <div class="row">
                 <div class="col"></div>
                 <div class="col d-flex justify-content-end">
-                    <button type="button" class="btn btn-secondary me-2" onclick="limpiarFormulario();">Cancelar</button>
+                    <button type="button" class="btn btn-secondary me-2"
+                        onclick="limpiarFormulario();">Cancelar</button>
                     <button type="button" class="btn btn-primary" onclick="enviarFormulario();">Guardar</button>
                 </div>
             </div>

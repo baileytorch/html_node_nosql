@@ -1,5 +1,6 @@
 window.onload = function () {
     cargarOpciones();
+    cargarComunas();
     $('#alertNombre').hide();
     $('#alertEmail').hide();
     $('#alertContrasena').hide();
@@ -164,6 +165,24 @@ async function cargarOpciones() {
             const opcion = document.createElement('option');
             opcion.value = item.iso_2; // Valor interno
             opcion.textContent = item.nombre; // Texto visible para el usuario
+            select.appendChild(opcion);
+        });
+    } catch (error) {
+        console.error('Error cargando opciones:', error);
+    }
+};
+
+async function cargarComunas() {
+    try {
+        const respuesta = await fetch('http://localhost:3000/comunas');
+        const datos = await respuesta.json();
+
+        const select = document.getElementById('selectComuna');
+
+        datos.forEach(item => {
+            const opcion = document.createElement('option');
+            opcion.value = item.COMUNA_INE; // Valor interno
+            opcion.textContent = item.N_COMUNA; // Texto visible para el usuario
             select.appendChild(opcion);
         });
     } catch (error) {
