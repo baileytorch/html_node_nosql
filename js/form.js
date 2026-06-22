@@ -162,7 +162,7 @@ async function cargarOpciones() {
 
         datos.forEach(item => {
             const opcion = document.createElement('option');
-            opcion.value = item.iso2; // Valor interno
+            opcion.value = item.iso_2; // Valor interno
             opcion.textContent = item.nombre; // Texto visible para el usuario
             select.appendChild(opcion);
         });

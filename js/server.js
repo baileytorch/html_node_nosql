@@ -1,9 +1,8 @@
-// import express from 'express';
-
 const express = require("express");
 const cors = require("cors");
-const bodyParser = require("body-parser");
 const mongoose = require("mongoose");
+const bcrypt = require('bcryptjs');
+require('dotenv').config();
 
 const app = express();
 const port = 3000;
@@ -11,15 +10,21 @@ const port = 3000;
 // Middleware
 app.use(cors());
 app.use(express.json());
-app.use(bodyParser.urlencoded({ extended: true }));
-app.use(bodyParser.json());
 
 // Conexión a MongoDB
-mongoose.connect("mongodb://localhost:27017/test", {
-    // useNewUrlParser: true,
-    // useUnifiedTopology: true,
-}).then(() => console.log("Conexión Exitosa a MongoDB"))
+mongoose.connect(process.env.URL).then(() => console.log("Conexión Exitosa a MongoDB"))
     .catch((err) => console.error("Error al conectar a MongoDB:", err));
+
+app.listen(port, () => {
+    console.log(`Servidor corriendo en http://localhost:${port}`);
+});
+
+const address = new mongoose.Schema({
+    comuna: Number,
+    calle: String,
+    numero: String,
+    departamento: String
+});
 
 // Esquemas y modelos de Mongoose
 const usuario = new mongoose.Schema({
@@ -27,18 +32,17 @@ const usuario = new mongoose.Schema({
     email: String,
     fechaNacimiento: Date,
     nacionalidad: String,
-    direccion: String,
+    direccion: [address],
     genero: String,
     contrasena: String,
-    foto: String
+    foto: String,
+    fecha: { type: Date, default: Date.now }
 });
-
 const Usuario = mongoose.model("Usuario", usuario, 'usuarios');
 
 const pais = new mongoose.Schema({
     nombre: String,
-    iso2: String,
-    iso3: String,
+    iso_2: String,
     nacionalidad: String,
 });
 const Pais = mongoose.model("Pais", pais, 'paises');
@@ -49,7 +53,9 @@ app.post("/guardar", async (req, res) => {
     console.log("Datos recibidos:", req.body);
     try {
         const { nombre, email, fechaNacimiento, nacionalidad, direccion, genero, contrasena, foto } = req.body;
-        const nuevoUsuario = new Usuario({ nombre, email, fechaNacimiento, nacionalidad, direccion, genero, contrasena, foto });
+        // Encriptamos la contraseña antes de guardarla
+        const contrasenaEncriptada = bcrypt.hashSync(contrasena, 10);
+        const nuevoUsuario = new Usuario({ nombre, email, fechaNacimiento, nacionalidad, direccion, genero, contrasena: contrasenaEncriptada, foto });
 
         await nuevoUsuario.save();
         res.status(200).json({ message: "Datos guardados correctamente" });
@@ -62,7 +68,19 @@ app.post("/guardar", async (req, res) => {
 // Ruta para leer datos usuarios
 app.get('/usuarios', async (req, res) => {
     try {
-        const usuarios = await Usuario.find(); // Lee todos los documentos
+        const usuarios = await Usuario.aggregate([{
+            $lookup: {
+                from: 'paises', // Nombre de la colección de países
+                localField: 'nacionalidad', // Campo en usuarios
+                foreignField: 'iso_2', // Campo en paises
+                as: 'paisInfo' // Nombre del campo donde se almacenarán los datos
+            }
+        }, {
+            $unwind: {
+                path: '$paisInfo',
+                preserveNullAndEmptyArrays: true
+            }
+        }]); // Lee todos los documentos
         res.json(usuarios); // Envía los datos en formato JSON
     } catch (error) {
         res.status(500).json({ mensaje: 'Error al obtener los datos' });
@@ -77,8 +95,4 @@ app.get('/paises', async (req, res) => {
     } catch (error) {
         res.status(500).json({ mensaje: 'Error al obtener datos' });
     }
-});
-
-app.listen(port, () => {
-    console.log(`Servidor corriendo en http://localhost:${port}`);
 });

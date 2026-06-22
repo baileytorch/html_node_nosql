@@ -23,7 +23,7 @@ Se puede utilizar la herramienta oficial MongoDB Compass para revisar las bases 
    Una vez instalado, ejecutar por terminal:
    ```
    npm init -y
-   npm install express mongoose cors body-parser
+   npm install express mongoose cors bcryptjs dotenv
    ```
 
    Si no permite ejecución de Scripts, ejecutar por terminal:
@@ -35,5 +35,5 @@ Se puede utilizar la herramienta oficial MongoDB Compass para revisar las bases 
 
 Una vez codificado el backend, iniciar la aplicación, ejecutando el siguiente comando:
 ```
-node app.js
+node node --env-file=.env app.js
 ```
