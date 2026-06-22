@@ -119,6 +119,14 @@ async function enviarFormulario() {
         const hashContrasena = await hashPassword(contrasena);
         formData.set('contrasena', hashContrasena);
 
+        const direccion = {
+            comuna: formData.get('comuna'),
+            calle: formData.get('calle'),
+            numero: formData.get('numero'),
+            departamento: formData.get('departamento')
+        };
+        formData.set('direccion', JSON.stringify(direccion));
+
         const archivoFoto = formData.get('foto');
         const nombreArchivo = archivoFoto.name;
         formData.set('foto', nombreArchivo);
