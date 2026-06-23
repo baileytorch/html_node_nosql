@@ -4,6 +4,9 @@ const mongoose = require("mongoose");
 const bcrypt = require('bcryptjs');
 require('dotenv').config();
 
+const dns = require('node:dns/promises');
+dns.setServers(["1.1.1.1", "1.0.0.1"]);
+
 const app = express();
 const port = 3000;
 
@@ -27,8 +30,8 @@ const address = new mongoose.Schema({
 });
 
 const comuna = new mongoose.Schema({
-    C_REGION: Number,
-    COMUNA_INE: Number,
+    C_REGION: String,
+    COMUNA_INE: String,
     N_COMUNA: String,
 });
 const Comuna = mongoose.model("Comuna", comuna, 'comunas');
@@ -62,7 +65,8 @@ app.post("/guardar", async (req, res) => {
         const { nombre, email, fechaNacimiento, nacionalidad, direccion, genero, contrasena, foto } = req.body;
         // Encriptamos la contraseña antes de guardarla
         const contrasenaEncriptada = bcrypt.hashSync(contrasena, 10);
-        const nuevoUsuario = new Usuario({ nombre, email, fechaNacimiento, nacionalidad, direccion, genero, contrasena: contrasenaEncriptada, foto });
+        const parsedObject = JSON.parse(direccion);
+        const nuevoUsuario = new Usuario({ nombre, email, fechaNacimiento, nacionalidad, direccion: parsedObject, genero, contrasena: contrasenaEncriptada, foto });
 
         await nuevoUsuario.save();
         res.status(200).json({ message: "Datos guardados correctamente" });

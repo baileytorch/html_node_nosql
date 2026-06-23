@@ -9,6 +9,8 @@ async function obtenerUsuarios() {
 
         // Convierte la respuesta a formato JSON
         const usuarios = await respuesta.json();
+        console.log(usuarios)
+
 
         new DataTable('#usuarios', {
             data: usuarios,
@@ -20,7 +22,9 @@ async function obtenerUsuarios() {
                     return fecha.toLocaleDateString();
                 }},
                 {data: 'paisInfo.nombre'}, // Muestra el nombre del país desde el lookup
-                { data: 'direccion' },
+                { data: 'direccion',render:function(data){
+                    return data.map(direccion => `${direccion.calle} N°${direccion.numero}${direccion.departamento !==''?', Depto/Of ' + direccion.departamento:''}`)
+                }},
                 { data: 'genero', render: function (data) {
                     return data === 'Masc' ? 'Masculino' : data === 'Fem' ? 'Femenino' : 'Otro';
                 }}
